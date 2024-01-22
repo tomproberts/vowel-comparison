@@ -95,7 +95,7 @@ endproc
 
 procedure exportAsCsv
     select Table formants
-    Save as semicolon-separated file: "formants.csv"
+    Save as semicolon-separated file: "../formants.csv"
 endproc
 
 procedure trackFormants
