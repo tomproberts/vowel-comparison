@@ -5,7 +5,7 @@
 # Takes a selected Sound and aligned TextGrid, and extracts the vowel formants
 #
 
-
+# START
 # Sanitise input
 @checkTextGridAndSoundAreSelected
 text_grid_object = selected: "TextGrid"
@@ -17,10 +17,11 @@ words_tier = 1
 phons_tier = 2
 
 # Create the formants table
-Create Table with column names: "formants", 0, "word phon_id phon F1 F2 F3 next_phon duration"
+Create Table with column names: "formants", 0, "word phon_id phon f1 f2 f3 next_phon duration"
 row_i = 0
 
-# Formant extraction
+# Formant tracking
+@trackFormants
 select text_grid_object
 n_word_intervals = Get number of intervals: words_tier
 n_phon_intervals = Get number of intervals: phons_tier
@@ -35,19 +36,25 @@ for phon_index from 1 to n_phon_intervals
         phon_start_abs = Get start time of interval: phons_tier, phon_index
         phon_end_abs = Get end time of interval: phons_tier, phon_index
         duration = phon_end_abs - phon_start_abs
+        mid_point = (phon_start_abs + phon_end_abs) / 2.0
         next_phon$ = Get label of interval: phons_tier, phon_index + 1
-        # phon_end = Get end time of interval: phons_tier, phon_index
-
+        
         # Word data
         word_index = Get interval at time: words_tier, phon_start_abs
         word_label$ = Get label of interval: words_tier, word_index
 
-        @insertIntoTable: word_label$, phon_index, phon_label$, next_phon$, duration
+        # Get formants
+        select formant_object
+        f1 = Get value at time: 1, mid_point, "hertz", "Linear"
+		f2 = Get value at time: 2, mid_point, "hertz", "Linear"
+		f3 = Get value at time: 3, mid_point, "hertz", "Linear"
+
+        @insertIntoTable: word_label$, phon_index, phon_label$, f1, f2, f3, next_phon$, duration
     endif
 endfor
 
 @exportAsCsv
-
+# END
 
 # Procedures
 procedure checkIsAlignedTextGrid
@@ -67,7 +74,7 @@ procedure checkTextGridAndSoundAreSelected
     endif
 endproc
 
-procedure insertIntoTable: .word_label$, .phon_id, .phon_label$, .next_phon$, .duration
+procedure insertIntoTable: .word_label$, .phon_id, .phon_label$, .f1, .f2, .f3, .next_phon$, .duration
     # Insert new row
     select Table formants
     row_i = row_i + 1
@@ -79,6 +86,9 @@ procedure insertIntoTable: .word_label$, .phon_id, .phon_label$, .next_phon$, .d
     Set string value: row_i, "next_phon", .next_phon$
     Set string value: row_i, "word", .word_label$
     Set numeric value: row_i, "duration", .duration
+    Set numeric value: row_i, "f1", .f1
+    Set numeric value: row_i, "f2", .f2
+    Set numeric value: row_i, "f3", .f3
 
     # Make sure Praat "Text Writing Preferences" are set to "UTF-8"
 endproc
@@ -86,4 +96,15 @@ endproc
 procedure exportAsCsv
     select Table formants
     Save as semicolon-separated file: "formants.csv"
+endproc
+
+procedure trackFormants
+    select sound_object
+    .timestep = 0 ; seconds, default is 25% of window length
+    .n_formants = 4
+    .ceiling = 4200 ; hz
+    .window = 0.015 ; window size (s)
+    .pre_emph = 30 ; hz, everything under is not emphasized
+    To Formant (burg)... .timestep .n_formants .ceiling .window .pre_emph
+    formant_object = selected: "Formant"
 endproc
