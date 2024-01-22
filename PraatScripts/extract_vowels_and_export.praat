@@ -12,20 +12,19 @@ Create Table with column names: "formants", 0, "word_i word"
 row_i = 0
 
 # Get file
-file_name$ = "ElevenLabs_2024-01-21T21_47_56_Juan Schubert_pvc_s50_sb75_m1"
-file_name_underscore$ = "ElevenLabs_2024-01-21T21_47_56_Juan_Schubert_pvc_s50_sb75_m1"
+file_name$ = "ElevenLabs_2024-01-21T21_47_56_JuanSchubert_pvc_s50_sb75_m1"
 Read from file: aligned_dir$ + file_name$ + ".TextGrid"
 
 # Formant extraction
 words_tier = 1
 phones_tier = 2
 
-select TextGrid 'file_name_underscore$'
+select TextGrid 'file_name$'
 n_word_intervals = Get number of intervals: words_tier
 
 for word_index from 1 to n_word_intervals
     # Extract word
-    select TextGrid 'file_name_underscore$'
+    select TextGrid 'file_name$'
     label$ = Get label of interval: words_tier, word_index
 
     # if label != ""
