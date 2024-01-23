@@ -14,33 +14,33 @@ sound_object = selected: "Sound"
 # Check if aligned TextGrid has been selected, not the prealigned by accident
 @checkIsAlignedTextGrid
 words_tier = 1
-phons_tier = 2
+phones_tier = 2
 
 # Create the formants table
-Create Table with column names: "formants", 0, "word phon_id phon f1 f2 f3 next_phon duration"
+Create Table with column names: "formants", 0, "word phone_id phone f1 f2 f3 next_phone duration"
 row_i = 0
 
 # Formant tracking
 @trackFormants
 select text_grid_object
 n_word_intervals = Get number of intervals: words_tier
-n_phon_intervals = Get number of intervals: phons_tier
+n_phone_intervals = Get number of intervals: phones_tier
 
-# For every phon
-for phon_index from 1 to n_phon_intervals
+# For every phone
+for phone_index from 1 to n_phone_intervals
     select text_grid_object
-    phon_label$ = Get label of interval: phons_tier, phon_index
+    phone_label$ = Get label of interval: phones_tier, phone_index
 
-    if phon_label$ <> ""
-        # Phon data
-        phon_start_abs = Get start time of interval: phons_tier, phon_index
-        phon_end_abs = Get end time of interval: phons_tier, phon_index
-        duration = phon_end_abs - phon_start_abs
-        mid_point = (phon_start_abs + phon_end_abs) / 2.0
-        next_phon$ = Get label of interval: phons_tier, phon_index + 1
+    if phone_label$ <> ""
+        # phone data
+        phone_start_abs = Get start time of interval: phones_tier, phone_index
+        phone_end_abs = Get end time of interval: phones_tier, phone_index
+        duration = phone_end_abs - phone_start_abs
+        mid_point = (phone_start_abs + phone_end_abs) / 2.0
+        next_phone$ = Get label of interval: phones_tier, phone_index + 1
         
         # Word data
-        word_index = Get interval at time: words_tier, phon_start_abs
+        word_index = Get interval at time: words_tier, phone_start_abs
         word_label$ = Get label of interval: words_tier, word_index
 
         # Get formants
@@ -49,7 +49,7 @@ for phon_index from 1 to n_phon_intervals
 		f2 = Get value at time: 2, mid_point, "hertz", "Linear"
 		f3 = Get value at time: 3, mid_point, "hertz", "Linear"
 
-        @insertIntoTable: word_label$, phon_index, phon_label$, f1, f2, f3, next_phon$, duration
+        @insertIntoTable: word_label$, phone_index, phone_label$, f1, f2, f3, next_phone$, duration
     endif
 endfor
 
@@ -61,7 +61,7 @@ procedure checkIsAlignedTextGrid
     select text_grid_object
     n_tiers = Get number of tiers
     if n_tiers < 2
-        exitScript: "TextGrid doesn't have a words tier and phons tier. Is this the aligned TextGrid?"
+        exitScript: "TextGrid doesn't have a words tier and phones tier. Is this the aligned TextGrid?"
     endif
 endproc
 
@@ -74,16 +74,16 @@ procedure checkTextGridAndSoundAreSelected
     endif
 endproc
 
-procedure insertIntoTable: .word_label$, .phon_id, .phon_label$, .f1, .f2, .f3, .next_phon$, .duration
+procedure insertIntoTable: .word_label$, .phone_id, .phone_label$, .f1, .f2, .f3, .next_phone$, .duration
     # Insert new row
     select Table formants
     row_i = row_i + 1
     Insert row: row_i
 
     # Insert values
-    Set numeric value: row_i, "phon_id", .phon_id
-    Set string value: row_i, "phon", .phon_label$
-    Set string value: row_i, "next_phon", .next_phon$
+    Set numeric value: row_i, "phone_id", .phone_id
+    Set string value: row_i, "phone", .phone_label$
+    Set string value: row_i, "next_phone", .next_phone$
     Set string value: row_i, "word", .word_label$
     Set numeric value: row_i, "duration", .duration
     Set numeric value: row_i, "f1", .f1
