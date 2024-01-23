@@ -1,6 +1,7 @@
 library(dplyr)
 library(ggplot2)
 
+
 # Read CSV
 my_vowels <- read.csv("./formants.csv", sep = ";", nrows = 0) %>%
   filter(phon %in% c("iː", "ɪ", "a", "aː", "ə", "ɛ", "eː", "ɐ", "ɔ", "oː", "ʊ", "uː"))
@@ -15,9 +16,9 @@ p <- my_vowels %>%
   theme(legend.position = "none")+
   scale_x_reverse(position = "top", name = "F2 (Hz)")+
   scale_y_reverse(position = "right", name = "F1 (Hz)")+
-  geom_text(hjust=0, vjust=0, size = 3)
+  geom_text(hjust=0, vjust=0, size = 3)+
+  ggtitle("Vowel Space of Clone")
 
 # Display plot
-# pdf("ggplot.pdf")
+ggsave("ggplot.pdf", device=cairo_pdf)
 print(p)
-# dev.off() 
