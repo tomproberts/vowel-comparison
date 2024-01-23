@@ -100,11 +100,11 @@ endproc
 
 procedure trackFormants
     select sound_object
-    .timestep = 0 ; seconds, default is 25% of window length
+    .timestep = 0.002 ; seconds, default is 25% of window length
     .n_formants = 4
     .ceiling = 4200 ; hz
     .window = 0.015 ; window size (s)
-    .pre_emph = 30 ; hz, everything under is not emphasized
+    .pre_emph = 40 ; hz, everything under is not emphasized
     To Formant (burg)... .timestep .n_formants .ceiling .window .pre_emph
     formant_object = selected: "Formant"
 endproc

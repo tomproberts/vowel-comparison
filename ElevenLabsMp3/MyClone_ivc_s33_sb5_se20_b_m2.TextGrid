@@ -1,0 +1,114 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 41.833990929705216 
+tiers? <exists> 
+size = 1 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "utt" 
+        xmin = 0 
+        xmax = 41.833990929705216 
+        intervals: size = 25 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.01 
+            text = "" 
+        intervals [2]:
+            xmin = 0.01 
+            xmax = 1.769240366014289 
+            text = "Einst stritten sich Nordwind und Sonne" 
+        intervals [3]:
+            xmin = 1.769240366014289 
+            xmax = 2.2284847080282675 
+            text = "" 
+        intervals [4]:
+            xmin = 2.2284847080282675 
+            xmax = 4.370025832525311 
+            text = "wer von ihnen beiden wohl der Stärkere wäre" 
+        intervals [5]:
+            xmin = 4.370025832525311 
+            xmax = 4.698344215726957 
+            text = "" 
+        intervals [6]:
+            xmin = 4.698344215726957 
+            xmax = 8.584295230644802 
+            text = "als ein Wanderer, der in einen warmen Mantel gehüllt war, des Weges daherkam" 
+        intervals [7]:
+            xmin = 8.584295230644802 
+            xmax = 9.832367008128552 
+            text = "" 
+        intervals [8]:
+            xmin = 9.832367008128552 
+            xmax = 12.934936383495533 
+            text = "Sie wurden einig, dass derjenige für den Stärkeren gelten sollte" 
+        intervals [9]:
+            xmin = 12.934936383495533 
+            xmax = 13.162046328638347 
+            text = "" 
+        intervals [10]:
+            xmin = 13.162046328638347 
+            xmax = 15.846260217932127 
+            text = "der den Wanderer zwingen würde, seinen Mantel abzunehmen" 
+        intervals [11]:
+            xmin = 15.846260217932127 
+            xmax = 17.080305235859495 
+            text = "" 
+        intervals [12]:
+            xmin = 17.080305235859495 
+            xmax = 19.9231746031746 
+            text = "Der Nordwind blies mit aller Macht, aber je mehr er blies" 
+        intervals [13]:
+            xmin = 19.9231746031746 
+            xmax = 20.408308827771812 
+            text = "" 
+        intervals [14]:
+            xmin = 20.408308827771812 
+            xmax = 23.5397964274209 
+            text = "desto fester hüllte sich der Wanderer in seinen Mantel ein" 
+        intervals [15]:
+            xmin = 23.5397964274209 
+            xmax = 24.20234368736615 
+            text = "" 
+        intervals [16]:
+            xmin = 24.20234368736615 
+            xmax = 26.446155365701806 
+            text = "Endlich gab der Nordwind den Kampf auf" 
+        intervals [17]:
+            xmin = 26.446155365701806 
+            xmax = 27.168331879042128 
+            text = "" 
+        intervals [18]:
+            xmin = 27.168331879042128 
+            xmax = 30.80431640423962 
+            text = "Nun erwärmte die Sonne die Luft mit ihren freundlichen Strahlen" 
+        intervals [19]:
+            xmin = 30.80431640423962 
+            xmax = 32.153208777654186 
+            text = "" 
+        intervals [20]:
+            xmin = 32.153208777654186 
+            xmax = 35.524895575417226 
+            text = "und schon nach wenigen Augenblicken zog der Wanderer seinen Mantel aus" 
+        intervals [21]:
+            xmin = 35.524895575417226 
+            xmax = 36.19538069264155 
+            text = "" 
+        intervals [22]:
+            xmin = 36.19538069264155 
+            xmax = 38.037891156462585 
+            text = "Da musste der Nordwind zugeben" 
+        intervals [23]:
+            xmin = 38.037891156462585 
+            xmax = 38.666449579396435 
+            text = "" 
+        intervals [24]:
+            xmin = 38.666449579396435 
+            xmax = 41.61644957939627 
+            text = "dass die Sonne von ihnen beiden der Stärkere war" 
+        intervals [25]:
+            xmin = 41.61644957939627 
+            xmax = 41.833990929705216 
+            text = "" 
