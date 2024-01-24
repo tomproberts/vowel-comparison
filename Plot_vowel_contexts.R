@@ -11,8 +11,13 @@ my_vowels <- read.csv("./formants.csv", sep = ";", nrows = 0) %>%
   filter(phone == desired_vowel)
 
 # Generate context label
-# my_vowels$context <- eval(paste(desired_vowel, substring(my_vowels$next_phone, 1, 1), sep = ""), my_vowels)
-my_vowels$context <- eval(paste(desired_vowel, my_vowels$next_phone, sep = ""), my_vowels)
+get_context <- function (next_phone) {
+  # Take first character of next_phone to avoid aspiration making a difference
+  return (paste(desired_vowel, substring(next_phone, 1, 1), sep = ""))
+  # return (paste(desired_vowel, next_phone, sep = ""))
+}
+
+my_vowels$context <- eval(get_context(my_vowels$next_phone), my_vowels)
 
 # Plot
 p <- my_vowels %>%
@@ -25,8 +30,8 @@ p <- my_vowels %>%
   scale_x_reverse(position = "top", name = "F2 (Hz)")+
   scale_y_reverse(position = "right", name = "F1 (Hz)")+
   geom_text(hjust=0, vjust=0, size = 3)+
-  ggtitle(paste("Distribution of vowel ", desired_vowel, " from Clone Reading Word List", sep = "'"))
+  ggtitle(paste("Distribution of vowel '", desired_vowel, "' from Clone Reading Word List", sep = ""))
 
 # Display plot
-# ggsave("ggplot.pdf", device=cairo_pdf)
+ggsave("ggplot.pdf", device=cairo_pdf)
 print(p)
