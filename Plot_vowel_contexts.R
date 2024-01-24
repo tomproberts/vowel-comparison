@@ -8,12 +8,17 @@ POINTS_SAMPLED <- 6
 
 # Read CSV
 desired_vowel <- "ɪ"
-my_vowels <- read.csv("./formants.csv", sep = ";", nrows = 0) %>%
+my_vowels_ungrouped <- read.csv("./formants.csv", sep = ";", nrows = 0) %>%
   filter(phone == desired_vowel)
 
-# Get formants from midpoint
-my_vowels <- my_vowels %>%
-  filter(point_in_phone == (POINTS_SAMPLED %/% 2))
+# Get average formant values
+my_vowels <- my_vowels_ungrouped %>%
+  filter(point_in_phone < POINTS_SAMPLED - 1,
+         timepoint_in_phone > 0.015) %>%
+  group_by(phone_id) %>%
+  mutate(avg_f1 = mean(f1)) %>%
+  mutate(avg_f2 = mean(f2)) %>%
+  filter(point_in_phone == (POINTS_SAMPLED %/% 2)) # just pick one data point for each phone_id
 
 # Generate context label
 get_context <- function (next_phone) {
@@ -27,7 +32,7 @@ my_vowels$context <- eval(get_context(my_vowels$next_phone), my_vowels)
 # Plot
 p <- my_vowels %>%
   ggplot(.)+
-  aes(x = f2, y = f1, color = context, label = word)+
+  aes(x = avg_f2, y = avg_f1, color = context, label = word)+
   # stat_ellipse(type = "t", level = 0.67, linetype = 2, linewidth = 0.75,
   #              geom = "polygon", alpha = 0.05, aes(fill = context))+
   theme_classic()+
