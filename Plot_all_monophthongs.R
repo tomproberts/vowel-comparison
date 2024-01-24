@@ -13,7 +13,7 @@ to_bark <- function(f) {
 }
 
 # Read CSV
-my_vowels <- read.csv("./formants.csv", sep = ";", nrows = 0) %>%
+my_vowels <- read.csv("./ElevenLabsMp3/formants.csv", sep = ";", nrows = 0) %>%
   filter(phone %in% MONOPHTHONGS, !(next_phone %in% c(NASALS, LIQUIDS)))
 
 # Filter out failed formant tracking
