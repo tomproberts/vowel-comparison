@@ -17,7 +17,7 @@ words_tier = 1
 phones_tier = 2
 
 # Create the formants table
-Create Table with column names: "formants", 0, "word phone_id phone f1 f2 f3 next_phone duration"
+Create Table with column names: "formants", 0, "word phone_id phone f1 f2 point_in_phone timepoint_in_phone next_phone duration"
 row_i = 0
 
 # Formant tracking
@@ -25,6 +25,7 @@ row_i = 0
 select text_grid_object
 n_word_intervals = Get number of intervals: words_tier
 n_phone_intervals = Get number of intervals: phones_tier
+n_points = 6 ; number of points to sample formant values per phone
 
 # For every phone
 for phone_index from 1 to n_phone_intervals
@@ -36,20 +37,22 @@ for phone_index from 1 to n_phone_intervals
         phone_start_abs = Get start time of interval: phones_tier, phone_index
         phone_end_abs = Get end time of interval: phones_tier, phone_index
         duration = phone_end_abs - phone_start_abs
-        mid_point = (phone_start_abs + phone_end_abs) / 2.0
         next_phone$ = Get label of interval: phones_tier, phone_index + 1
         
         # Word data
         word_index = Get interval at time: words_tier, phone_start_abs
         word_label$ = Get label of interval: words_tier, word_index
 
-        # Get formants
-        select formant_object
-        f1 = Get value at time: 1, mid_point, "hertz", "Linear"
-		f2 = Get value at time: 2, mid_point, "hertz", "Linear"
-		f3 = Get value at time: 3, mid_point, "hertz", "Linear"
-
-        @insertIntoTable: word_label$, phone_index, phone_label$, f1, f2, f3, next_phone$, duration
+        # Get formants at each timepoint
+        step = duration / (n_points - 1) ; timestep
+        for timepoint from 1 to n_points
+            sample_point = phone_start_abs + (timepoint - 1) * step
+            select formant_object
+            f1 = Get value at time: 1, sample_point, "hertz", "Linear"
+            f2 = Get value at time: 2, sample_point, "hertz", "Linear"
+    
+            @insertIntoTable: word_label$, phone_index, phone_label$, f1, f2, timepoint, sample_point - phone_start_abs, next_phone$, duration
+        endfor
     endif
 endfor
 
@@ -74,7 +77,7 @@ procedure checkTextGridAndSoundAreSelected
     endif
 endproc
 
-procedure insertIntoTable: .word_label$, .phone_id, .phone_label$, .f1, .f2, .f3, .next_phone$, .duration
+procedure insertIntoTable: .word_label$, .phone_id, .phone_label$, .f1, .f2, .point, .timepoint, .next_phone$, .duration
     # Insert new row
     select Table formants
     row_i = row_i + 1
@@ -88,7 +91,8 @@ procedure insertIntoTable: .word_label$, .phone_id, .phone_label$, .f1, .f2, .f3
     Set numeric value: row_i, "duration", .duration
     Set numeric value: row_i, "f1", .f1
     Set numeric value: row_i, "f2", .f2
-    Set numeric value: row_i, "f3", .f3
+    Set numeric value: row_i, "timepoint_in_phone", .timepoint
+    Set numeric value: row_i, "point_in_phone", .point
 
     # Make sure Praat "Text Writing Preferences" are set to "UTF-8"
 endproc

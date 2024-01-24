@@ -4,11 +4,16 @@ library(ggplot2)
 
 MONOPHTHONGS <- c("iː", "ɪ", "a", "aː", "ə", "ɛ", "eː", "ɐ", 
                   "ɔ", "oː", "ʊ", "uː", "œ", "øː", "ʏ", "yː")
+POINTS_SAMPLED <- 6
 
 # Read CSV
 desired_vowel <- "ɪ"
 my_vowels <- read.csv("./formants.csv", sep = ";", nrows = 0) %>%
   filter(phone == desired_vowel)
+
+# Get formants from midpoint
+my_vowels <- my_vowels %>%
+  filter(point_in_phone == (POINTS_SAMPLED %/% 2))
 
 # Generate context label
 get_context <- function (next_phone) {

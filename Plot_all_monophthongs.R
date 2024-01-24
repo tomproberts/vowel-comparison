@@ -6,6 +6,7 @@ MONOPHTHONGS <- c("iː", "ɪ", "a", "aː", "ə", "ɛ", "eː", "ɐ",
                   "ɔ", "oː", "ʊ", "uː", "œ", "øː", "ʏ", "yː")
 NASALS <- c("n", "n̩", "m", "m̩", "ɲ", "ŋ")
 LIQUIDS <- c("l", "l̩", "ʁ")
+POINTS_SAMPLED <- 6
 
 
 to_bark <- function(f) {
@@ -16,13 +17,17 @@ to_bark <- function(f) {
 my_vowels <- read.csv("./ElevenLabsMp3/formants.csv", sep = ";", nrows = 0) %>%
   filter(phone %in% MONOPHTHONGS, !(next_phone %in% c(NASALS, LIQUIDS)))
 
+# Get formants from midpoint
+my_vowels <- my_vowels %>%
+  filter(point_in_phone == (POINTS_SAMPLED %/% 2))
+
 # Filter out failed formant tracking
 my_vowels <- my_vowels %>%
   filter(f1 < 800, f2 < 2500)
 
 # Calculate bark formant values
-my_vowels$b1 <- eval(to_bark(my_vowels$f1), my_vowels)
-my_vowels$b2 <- eval(to_bark(my_vowels$f2), my_vowels)
+# my_vowels$b1 <- eval(to_bark(my_vowels$f1), my_vowels)
+# my_vowels$b2 <- eval(to_bark(my_vowels$f2), my_vowels)
 
 # Plot
 p <- my_vowels %>%
