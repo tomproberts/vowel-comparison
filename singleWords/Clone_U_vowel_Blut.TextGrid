@@ -14,13 +14,13 @@ item []:
         intervals: size = 3 
         intervals [1]:
             xmin = 0 
-            xmax = 1.685351039087919 
+            xmax = 1.37201353766901 
             text = "" 
         intervals [2]:
-            xmin = 1.685351039087919 
-            xmax = 23.48189098154079 
-            text = "Schnitt, Schnitte, Mittel, Gewitter, dicker, Blick, nickt, Schick, ich, Strich, Licht, Richter, Kippe, Nippel, tippen, Tipp, Kissen, Disk, bis, Riss, Mischer, Tisch, Fisch, Frisch, Pfiff, Schiff, Ziffer, Griff" 
+            xmin = 1.37201353766901 
+            xmax = 23.579808950734197 
+            text = "Blut, Akut, Ute, mutig, Flug, genug, Zug, Spuke, Buch, Besuch, Kuchen, Tuche, Schub, super, Lupe, grub, Mus, Tabus, Fußes, rußig, Dusche, duschen, wuschen, Zuschnitt, Ruf, Stufe, beruflich, Zufall" 
         intervals [3]:
-            xmin = 23.48189098154079 
+            xmin = 23.579808950734197 
             xmax = 23.67888888888889 
             text = "" 
