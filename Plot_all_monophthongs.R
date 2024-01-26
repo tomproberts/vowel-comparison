@@ -14,7 +14,7 @@ to_bark <- function(f) {
 }
 
 # Read CSV
-my_vowels_ungrouped <- read.csv("./ElevenLabsMp3/formants.csv", sep = ";", nrows = 0) %>%
+my_vowels_ungrouped <- read.csv("./NorthWind/formants.csv", sep = ";", nrows = 0) %>%
   filter(phone %in% MONOPHTHONGS, !(next_phone %in% c(NASALS, LIQUIDS)))
 
 # Get average formant values
@@ -37,7 +37,7 @@ my_vowels$b2 <- eval(to_bark(my_vowels$avg_f2), my_vowels)
 # Plot
 p <- my_vowels %>%
   ggplot(.)+
-  aes(x = b2, y = b1, color = phone, label = phone)+
+  aes(x = avg_f2, y = avg_f1, color = phone, label = phone)+
   stat_ellipse(type = "t", level = 0.67, linetype = 2, linewidth = 0.75,
                geom = "polygon", alpha = 0.05, aes(fill = phone))+
   theme_classic()+

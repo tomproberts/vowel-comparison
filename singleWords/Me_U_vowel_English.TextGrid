@@ -1,0 +1,26 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 22.961632653061226 
+tiers? <exists> 
+size = 1 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "utt" 
+        xmin = 0 
+        xmax = 22.961632653061226 
+        intervals: size = 3 
+        intervals [1]:
+            xmin = 0 
+            xmax = 2.033098289351899 
+            text = "" 
+        intervals [2]:
+            xmin = 2.033098289351899 
+            xmax = 20.396803499305296 
+            text = "fruit, shooter, roots, suited, spooks, Luke, fluke, fluked, loop, soups, troop, grouped, moose, spruce, loosen, truces, crucial, evolution, solution, sushi, hoof, roof, proofs, blue field" 
+        intervals [3]:
+            xmin = 20.396803499305296 
+            xmax = 22.961632653061226 
+            text = "" 

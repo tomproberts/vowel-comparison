@@ -6,8 +6,8 @@ MONOPHTHONGS <- c("iː", "ɪ", "a", "aː", "ə", "ɛ", "eː", "ɐ",
                   "ɔ", "oː", "ʊ", "uː", "œ", "øː", "ʏ", "yː")
 POINTS_SAMPLED <- 6
 
-# SPEAKER <- "Me"
-SPEAKER <- "Clone"
+SPEAKER <- "Me"
+# SPEAKER <- "Clone"
 
 # Read CSV
 desired_vowel <- "uː"
