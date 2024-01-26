@@ -14,10 +14,10 @@ item []:
         intervals: size = 3 
         intervals [1]:
             xmin = 0 
-            xmax = 1.37201353766901 
+            xmax = 1.4307643191850552 
             text = "" 
         intervals [2]:
-            xmin = 1.37201353766901 
+            xmin = 1.4307643191850552 
             xmax = 23.579808950734197 
             text = "Blut, Akut, Ute, mutig, Flug, genug, Zug, Spuke, Buch, Besuch, Kuchen, Tuche, Schub, super, Lupe, grub, Mus, Tabus, Fußes, rußig, Dusche, duschen, wuschen, Zuschnitt, Ruf, Stufe, beruflich, Zufall" 
         intervals [3]:

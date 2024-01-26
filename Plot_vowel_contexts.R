@@ -6,15 +6,20 @@ MONOPHTHONGS <- c("iː", "ɪ", "a", "aː", "ə", "ɛ", "eː", "ɐ",
                   "ɔ", "oː", "ʊ", "uː", "œ", "øː", "ʏ", "yː")
 POINTS_SAMPLED <- 6
 
+# SPEAKER <- "Me"
+SPEAKER <- "Clone"
+
 # Read CSV
-desired_vowel <- "ɪ"
-my_vowels_ungrouped <- read.csv("./formants.csv", sep = ";", nrows = 0) %>%
+desired_vowel <- "uː"
+my_vowels_ungrouped <- read.csv(
+  paste("./singleWords/Formants_", SPEAKER, "_U_vowel_Blut.csv", sep = ""),
+  sep = ";", nrows = 0) %>%
   filter(phone == desired_vowel)
 
 # Get average formant values
 my_vowels <- my_vowels_ungrouped %>%
   filter(point_in_phone < POINTS_SAMPLED - 1,
-         timepoint_in_phone > 0.015) %>%
+         timepoint_in_phone > 0.018) %>%
   group_by(phone_id) %>%
   mutate(avg_f1 = mean(f1)) %>%
   mutate(avg_f2 = mean(f2)) %>%
@@ -40,7 +45,7 @@ p <- my_vowels %>%
   scale_x_reverse(position = "top", name = "F2 (Hz)")+
   scale_y_reverse(position = "right", name = "F1 (Hz)")+
   geom_text(hjust=0, vjust=0, size = 3)+
-  ggtitle(paste("Distribution of vowel '", desired_vowel, "' from Clone Reading Word List", sep = ""))
+  ggtitle(paste("Distribution of Vowel '", desired_vowel, "' from ", SPEAKER, " Reading Word List", sep = ""))
 
 # Display plot
 ggsave("ggplot.pdf", device=cairo_pdf)

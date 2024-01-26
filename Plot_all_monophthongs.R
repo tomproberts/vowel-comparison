@@ -14,34 +14,39 @@ to_bark <- function(f) {
 }
 
 # Read CSV
-my_vowels <- read.csv("./ElevenLabsMp3/formants.csv", sep = ";", nrows = 0) %>%
+my_vowels_ungrouped <- read.csv("./ElevenLabsMp3/formants.csv", sep = ";", nrows = 0) %>%
   filter(phone %in% MONOPHTHONGS, !(next_phone %in% c(NASALS, LIQUIDS)))
 
-# Get formants from midpoint
-my_vowels <- my_vowels %>%
-  filter(point_in_phone == (POINTS_SAMPLED %/% 2))
+# Get average formant values
+my_vowels <- my_vowels_ungrouped %>%
+  filter(point_in_phone < POINTS_SAMPLED - 1,
+         timepoint_in_phone > 0.015) %>%
+  group_by(phone_id) %>%
+  mutate(avg_f1 = mean(f1)) %>%
+  mutate(avg_f2 = mean(f2)) %>%
+  filter(point_in_phone == (POINTS_SAMPLED %/% 2)) # just pick one data point for each phone_id
 
 # Filter out failed formant tracking
 my_vowels <- my_vowels %>%
-  filter(f1 < 800, f2 < 2500)
+  filter(avg_f1 < 800, avg_f2 < 2500)
 
 # Calculate bark formant values
-# my_vowels$b1 <- eval(to_bark(my_vowels$f1), my_vowels)
-# my_vowels$b2 <- eval(to_bark(my_vowels$f2), my_vowels)
+my_vowels$b1 <- eval(to_bark(my_vowels$avg_f1), my_vowels)
+my_vowels$b2 <- eval(to_bark(my_vowels$avg_f2), my_vowels)
 
 # Plot
 p <- my_vowels %>%
   ggplot(.)+
-  aes(x = f2, y = f1, color = phone, label = phone)+
+  aes(x = b2, y = b1, color = phone, label = phone)+
   stat_ellipse(type = "t", level = 0.67, linetype = 2, linewidth = 0.75,
                geom = "polygon", alpha = 0.05, aes(fill = phone))+
   theme_classic()+
   theme(legend.position = "none")+
-  scale_x_reverse(position = "top", name = "F2 (Hz)")+
-  scale_y_reverse(position = "right", name = "F1 (Hz)")+
+  scale_x_reverse(position = "top", name = "F2 (Barks)")+
+  scale_y_reverse(position = "right", name = "F1 (Barks)")+
   geom_text(hjust=0, vjust=0, size = 3)+
   ggtitle("Vowel Space of Clone, Monophthongs, \"Die Sonne und der Wind\"")
 
 # Display plot
-ggsave("ggplot.pdf", device=cairo_pdf)
+ggsave("ggplot.pdf", device=cairo_pdf, width=6, height = 3)
 print(p)
