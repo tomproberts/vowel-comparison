@@ -1,20 +1,21 @@
 library(dplyr)
 library(ggplot2)
+source("Vowel_utils.R")
 
 
 MONOPHTHONGS <- c("iː", "ɪ", "a", "aː", "ə", "ɛ", "eː", "ɐ", 
                   "ɔ", "oː", "ʊ", "uː", "œ", "øː", "ʏ", "yː")
 POINTS_SAMPLED <- 6
 
-SPEAKER <- "Me"
-# SPEAKER <- "Clone"
+DESIRED_VOWEL <- "ɪ" # "uː" or "ɪ"
+SPEAKER <- "Clone" # "Me" or "Clone"
+
+PLOT_TITLE <-
+  paste("Distribution of Vowel '", DESIRED_VOWEL, "' from ", SPEAKER, " Reading Word List", sep = "")
 
 # Read CSV
-desired_vowel <- "uː"
-my_vowels_ungrouped <- read.csv(
-  paste("./singleWords/Formants_", SPEAKER, "_U_vowel_Blut.csv", sep = ""),
-  sep = ";", nrows = 0) %>%
-  filter(phone == desired_vowel)
+my_vowels_ungrouped <-
+  v_get_raw_formant_values_for_speaker_and_vowel(SPEAKER, DESIRED_VOWEL)
 
 # Get average formant values
 my_vowels <- my_vowels_ungrouped %>%
@@ -25,14 +26,8 @@ my_vowels <- my_vowels_ungrouped %>%
   mutate(avg_f2 = mean(f2)) %>%
   filter(point_in_phone == (POINTS_SAMPLED %/% 2)) # just pick one data point for each phone_id
 
-# Generate context label
-get_context <- function (next_phone) {
-  # Take first character of next_phone to avoid aspiration making a difference
-  return (paste(desired_vowel, substring(next_phone, 1, 1), sep = ""))
-  # return (paste(desired_vowel, next_phone, sep = ""))
-}
-
-my_vowels$context <- eval(get_context(my_vowels$next_phone), my_vowels)
+# Assign context label
+my_vowels$context <- eval(v_get_context(my_vowels$next_phone), my_vowels)
 
 # Plot
 p <- my_vowels %>%
@@ -45,7 +40,7 @@ p <- my_vowels %>%
   scale_x_reverse(position = "top", name = "F2 (Hz)")+
   scale_y_reverse(position = "right", name = "F1 (Hz)")+
   geom_text(hjust=0, vjust=0, size = 3)+
-  ggtitle(paste("Distribution of Vowel '", desired_vowel, "' from ", SPEAKER, " Reading Word List", sep = ""))
+  ggtitle(PLOT_TITLE)
 
 # Display plot
 ggsave("ggplot.pdf", device=cairo_pdf)
