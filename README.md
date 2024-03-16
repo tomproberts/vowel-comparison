@@ -30,12 +30,18 @@ After this, I created a few lists of individual words with particular vowels in 
 
 ### `Plot_clone_vs_me.R`
 
-In this file, you can compare the formants for the same vowels across different speakers, such as the `Clone` speaker and `Me`, both in German and English. It also contains a statistical analysis section at the bottom where I do *MANOVA* to test effect size and statistical significance. ![clone_vs_me](https://github.com/tomproberts/vowel-comparison/blob/main/plots/clone_vs_me.png)
+In this file, you can compare the formants for the same vowels across different speakers, such as the `Clone` speaker and `Me`, both in German and English. It also contains a statistical analysis section at the bottom where I do *MANOVA* to test effect size and statistical significance.
+
+<img src="https://github.com/tomproberts/vowel-comparison/blob/main/plots/clone_vs_me.png" width="600">
 
 ### `Plot_vowel_contexts.R`
 
-In this file, you can compare the formants for the same vowels in different contexts, but for the same speaker. It also labels each point with the word that has the corresponding vowel in it. ![vowel_contexts](https://github.com/tomproberts/vowel-comparison/blob/main/plots/vowel_contexts.png)
+In this file, you can compare the formants for the same vowels in different contexts, but for the same speaker. It also labels each point with the word that has the corresponding vowel in it.
+
+<img src="https://github.com/tomproberts/vowel-comparison/blob/main/plots/vowel_contexts.png" width="600">
 
 ### `Plot_all_monophthongs.R`
 
-In this file, all the formants extracted from the (old) "Die Sonne und der Wind" poem are displayed for all of the monophongs. Wouldn't really reccommend. ![all_monophongs](https://github.com/tomproberts/vowel-comparison/blob/main/plots/all_monophongs.png)
+In this file, all the formants extracted from the (old) "Die Sonne und der Wind" poem are displayed for all of the monophongs. Wouldn't really recommend. 
+
+<img src="https://github.com/tomproberts/vowel-comparison/blob/main/plots/all_monophongs.png" width="600">
